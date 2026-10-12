@@ -3,22 +3,21 @@
   const root = document.documentElement;
   root.classList.remove('no-js');
 
-  // ---- Theme (dark default, remembers choice) ----
+  // ---- Theme (light "paper" default to match the logos; remembers choice) ----
   const THEME_KEY = 'anv-theme';
   const stored = (() => { try { return localStorage.getItem(THEME_KEY); } catch { return null; } })();
-  const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-  setTheme(stored || (prefersLight ? 'light' : 'dark'));
+  setTheme(stored || 'light');
 
   function setTheme(theme) {
     root.setAttribute('data-theme', theme);
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', theme === 'light' ? '#f8fafc' : '#090d16');
+    if (meta) meta.setAttribute('content', theme === 'light' ? '#fdfbf2' : '#1a1220');
   }
 
   document.addEventListener('DOMContentLoaded', () => {
     const themeBtn = document.querySelector('.theme-toggle');
     themeBtn?.addEventListener('click', () => {
-      const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       setTheme(next);
       try { localStorage.setItem(THEME_KEY, next); } catch {}
     });
